@@ -5,6 +5,8 @@ import path from 'path';
 import ejs from 'ejs';
 import { transformFromAst } from 'babel-core';
 import { jsonLoader } from './jsonLoader.js';
+import { SyncHook } from 'tapable';
+import { changeOutputPath } from './changeOutputPath.js';
 let id = 0;
 
 const webPackConfig = {
@@ -16,6 +18,11 @@ const webPackConfig = {
       },
     ],
   },
+  plugins: [new changeOutputPath()],
+};
+
+const hooks = {
+  emitFile: SyncHook(['context']),
 };
 
 function createAsset(filePath) {
@@ -61,6 +68,14 @@ function createGraph(filePath) {
   return queue;
 }
 
+function initPlugins() {
+  const plugins = webPackConfig.plugins;
+  plugins.forEach((plugin) => {
+    plugin.apply(hooks);
+  });
+}
+
+initPlugins();
 const graph = createGraph('./example/main.js');
 
 function build(graph) {
@@ -73,7 +88,14 @@ function build(graph) {
     };
   });
   const code = ejs.render(template, { data });
-  fs.writeFileSync('./dist/bundle.js', code);
+  let outputPath = './dist/bundle.js';
+  const context = {
+    changeOutputPath(path) {
+      outputPath = path;
+    },
+  };
+  hooks.emitFile.call(context);
+  fs.writeFileSync(outputPath, code);
 }
 
 build(graph);

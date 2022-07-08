@@ -1,13 +1,33 @@
 import fs from 'fs';
 import parser from '@babel/parser';
 import traverse from '@babel/traverse';
-import path, { relative } from 'path';
+import path from 'path';
 import ejs from 'ejs';
 import { transformFromAst } from 'babel-core';
+import { jsonLoader } from './jsonLoader.js';
 let id = 0;
 
+const webPackConfig = {
+  module: {
+    rules: [
+      {
+        test: /\.json$/,
+        use: jsonLoader,
+      },
+    ],
+  },
+};
+
 function createAsset(filePath) {
-  const source = fs.readFileSync(filePath, { encoding: 'utf-8' });
+  let source = fs.readFileSync(filePath, { encoding: 'utf-8' });
+
+  const loaders = webPackConfig.module.rules;
+  loaders.forEach(({ test, use }) => {
+    if (test.test(filePath)) {
+      source = use(source);
+    }
+  });
+
   const ast = parser.parse(source, { sourceType: 'module' });
   let deps = [];
   traverse.default(ast, {

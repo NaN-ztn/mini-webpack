@@ -1,0 +1,4 @@
+(function (modules) { function require(id) { const [fn, mapping] = modules[id]; const module = { exports: {}, };
+function localeRequire(filePath) { const id = mapping[filePath]; return require(id); } fn(localeRequire, module,
+module.exports); return module.exports; } require(1); })({ <% data.forEach(info=>{ %> "<%- info['id']
+%>":[function(require,module,exports){ <%- info['code'] %> },<%- JSON.stringify(info['mapping']) %>], <% }); %> });

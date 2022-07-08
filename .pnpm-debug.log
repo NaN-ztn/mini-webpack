@@ -1,0 +1,57 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "mini-webpack",
+      "version": "1.0.0",
+      "description": "",
+      "main": "index.js",
+      "type": "module",
+      "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+      },
+      "keywords": [],
+      "author": "",
+      "license": "ISC"
+    },
+    "prefix": "D:\\web\\mini-webpack\\mini-webpack"
+  },
+  "2 debug pnpm:context": {
+    "currentLockfileExists": false,
+    "storeDir": "D:\\.pnpm-store\\v3",
+    "virtualStoreDir": "D:\\web\\mini-webpack\\mini-webpack\\node_modules\\.pnpm"
+  },
+  "3 debug pnpm:stage": {
+    "prefix": "D:\\web\\mini-webpack\\mini-webpack",
+    "stage": "resolution_started"
+  },
+  "4 debug pnpm:update-check": {
+    "currentVersion": "7.0.0",
+    "latestVersion": "7.5.0"
+  },
+  "5 error pnpm": {
+    "code": "ERR_PNPM_FETCH_404",
+    "hint": "@bable/parser is not in the npm registry, or you have no permission to fetch it.\n\nNo authorization header was set for the request.",
+    "request": {
+      "url": "https://registry.npmmirror.com/@bable%2Fparser"
+    },
+    "response": {
+      "size": 0
+    },
+    "pkgName": "@bable/parser",
+    "spec": {
+      "fetchSpec": "latest",
+      "name": "@bable/parser",
+      "type": "tag"
+    },
+    "pkgsStack": [],
+    "err": {
+      "name": "pnpm",
+      "message": "GET https://registry.npmmirror.com/@bable%2Fparser: Not Found - 404",
+      "code": "ERR_PNPM_FETCH_404",
+      "stack": "pnpm: GET https://registry.npmmirror.com/@bable%2Fparser: Not Found - 404\n    at RetryOperation._fn (D:\\nvm\\v16.12.0\\node_modules\\pnpm\\dist\\pnpm.cjs:84259:19)\n    at processTicksAndRejections (node:internal/process/task_queues:96:5)"
+    }
+  }
+}
